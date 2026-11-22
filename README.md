@@ -1,2 +1,2 @@
 # GAMERARCH
-System for real geometers 
+System for real gamers
