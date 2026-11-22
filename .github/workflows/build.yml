@@ -1,0 +1,20 @@
+name: Build GamerArch ISO
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack project
+        run: unzip -q gamerarch.zip -d src
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android
+      - name: Build ISO
+        run: |
+          cd src/gamerarch
+          docker run --privileged --rm -v "$PWD":/work archlinux:latest bash /work/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GamerArch-ISO
+          path: src/gamerarch/out/*.iso
